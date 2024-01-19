@@ -1,0 +1,68 @@
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
+categories:
+  - title: '❗Breaking Changes:'
+    labels:
+      - '❗Breaking Change'
+  - title: '🚀 New Features:'
+    labels:
+      - 'enhancement'
+  - title: '🐛 Fixes:'
+    labels:
+      - 'bug'
+  - title: '📚 Documentation:'
+    labels:
+      - 'documentation'
+  - title: '🧹 Updates:'
+    labels:
+      - 'updates'
+      - 'dependencies'
+change-template: '- $TITLE (#$NUMBER)'
+change-title-escapes: '\<*_&'
+exclude-contributors:
+  - dependabot
+  - dependabot[bot]
+version-resolver:
+  major:
+    labels:
+      - 'Breaking Change'
+  minor:
+    labels:
+      - 'Feature'
+  patch:
+    labels:
+      - 'documentation'
+      - 'bug'
+      - 'dependencies'
+      - 'updates'
+  default: patch
+template: |
+  $CHANGES
+  
+  Version tags:
+  - `https://github.com/$OWNER/$REPOSITORY/releases/tag/v$RESOLVED_VERSION`
+  
+  **📒 Documentation**: Suzaku
+  
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+  
+  Thanks to $CONTRIBUTORS for making this release possible.
+
+autolabeler:
+  - label: 'documentation'
+    files:
+      - '*.md'
+    title:
+      - '/(docs|doc:|\[doc\]|typos|comment|documentation)/i'
+  - label: 'bug'
+    title:
+      - '/(fix|race|bug|missing|correct)/i'
+  - label: 'updates'
+    title:
+      - '/(improve|update|update|refactor|deprecated|remove|unused|test)/i'
+  - label: 'dependencies'
+    title:
+      - '/(bump|dependencies)/i'
+  - label: 'enhancement'
+    title:
+      - '/(feature|feat|create|implement|add)/i'
