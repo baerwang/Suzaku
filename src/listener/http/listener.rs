@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
-use suzaku::cli::cmd::cli;
+use std::net::TcpListener;
 
-fn main() {
-    cli()
+use crate::cli::args::CLi;
+
+pub fn listener(cli: CLi) {
+    let listener = TcpListener::bind(cli.address).unwrap();
+    for stream in listener.incoming() {
+        _ = stream.unwrap();
+    }
 }

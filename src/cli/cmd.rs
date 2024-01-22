@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-use suzaku::cli::cmd::cli;
+use clap::Parser;
 
-fn main() {
-    cli()
+use crate::cli::args;
+use crate::listener::http::listener::listener;
+
+pub fn cli() {
+    let app = args::CLi::parse();
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or(app.log_level.clone()));
+    listener(app)
 }
+
+

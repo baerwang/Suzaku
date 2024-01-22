@@ -25,3 +25,14 @@ codegen-units = 4
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+env_logger = "0.10"
+clap = { version = "4.4.18", default-features = false, features = [
+    "std",
+    "help",
+    "usage",
+    "suggestions",
+    "cargo",
+    "derive",
+    "string"
+] }
+log = "0.4.20"

@@ -15,8 +15,4 @@
  * limitations under the License.
  */
 
-use suzaku::cli::cmd::cli;
-
-fn main() {
-    cli()
-}
+pub mod http;
