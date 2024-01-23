@@ -18,12 +18,14 @@
 use clap::Parser;
 
 use crate::cli::args;
-use crate::listener::http::listener::listener;
+use crate::listener::http::listener::listener as http_license;
+use crate::listener::tcp::listener::listener as tcp_listener;
 
 pub fn cli() {
     let app = args::CLi::parse();
     env_logger::init_from_env(env_logger::Env::new().default_filter_or(app.log_level.clone()));
-    listener(app)
+    match app.protocol.as_str() {
+        "TCP" => tcp_listener(app),
+        _ => http_license(app),
+    }
 }
-
-

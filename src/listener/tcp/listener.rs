@@ -15,13 +15,34 @@
  * limitations under the License.
  */
 
-use std::net::TcpListener;
+use std::io::*;
+use std::net::{TcpListener, TcpStream};
 
 use crate::cli::args::CLi;
 
+fn handle_client(mut stream: TcpStream) {
+    let mut buffer = [0; 512];
+    stream.read_exact(&mut buffer).unwrap();
+
+    let received_data = String::from_utf8_lossy(&buffer);
+    log::error!("Received data from client: {}", received_data);
+
+    stream.write_all("Hello from server!".as_bytes()).unwrap();
+}
+
 pub fn listener(cli: CLi) {
     let listener = TcpListener::bind(cli.address).unwrap();
+
     for stream in listener.incoming() {
-        _ = stream.unwrap();
+        match stream {
+            Ok(stream) => {
+                std::thread::spawn(|| {
+                    handle_client(stream);
+                });
+            }
+            Err(e) => {
+                log::error!("Error while accepting connection: {}", e);
+            }
+        }
     }
 }
